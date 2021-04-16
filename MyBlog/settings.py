@@ -14,9 +14,9 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 SECRET_KEY = '8oy7!z&rpbez9sf%!u^02af+pws)w_j1d)$c%k7i4#a($)$l$x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['denniskemboi.herokuapp.com','127.0.0.1']
 
 
 # Application definition
