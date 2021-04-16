@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Update Blog {%endblock%}
+
+{% block body %}
+<h2>Edit Post: </h2>
+
+<form method="post" enctype="multipart/form-data">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type="Submit" class="btn btn-success btn-sm">Publish
+    </button>
+</form>
+<br><br><br>
+{% endblock %}

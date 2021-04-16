@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block title %} Blog Details {%endblock%}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-6">
+        <h2>{{ blog.blog_title }}</h2>
+        <h4> Posted By: {{ blog.author }}</h4>
+        <i>
+            <h6> Published On: {{ blog.publish_date|naturalday }}</h6>
+        </i>
+        <i>
+            <h6> Updated On: {{ blog.update_date|naturalday }}</h6>
+        </i>
+        <h6>
+            {% if not liked %}
+            <a href="{% url 'AppBlog:liked_post' pk=blog.pk  %}">
+                <i class="fab fa-thumbs-o-up  fa-2x"> </i>
+            </a>
+
+            {% else %}
+            <a href="{% url 'AppBlog:unliked_post' pk=blog.pk  %}">
+                <i class="fa fa-thumbs-o-down fa-2x"> </i>
+            </a>
+            {% endif %}
+            {{ blog.like_blog.count }} Like{{ blog.like_blog.count|pluralize }} | {{ blog.blog_comment.count}} Comments
+        </h6>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="/media/{{ blog.blog_image}}" width="250px">
+            </div>
+        </div>
+        {{blog.blog_content | linebreaks }}
+    </div>
+
+
+    <hr>
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <h5> Comments:</h5>
+            {% for comment in blog.blog_comment.all %}
+            <div class="p-2 m-2" style="background-color: #f5f5f5;">
+                <p> <a href="#"> {{ comment.user }} </a> </p>
+                <p>{{ comment.comment }} </p>
+                <h6 class="text-muted small"><i>{{ comment.comment_date|naturaltime }}</i></h6>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-sm-8">
+            <form method="post">
+                {{ comment_form| crispy }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% load humanize %} {% block title %} My Blogs
+{%endblock%} {% load custom_filters %} {% block body %}
+
+<p>
+    {{request.user.username}} you have written {{blogs.count}}
+    Blog{{blogs.count|pluralize}}
+</p>
+{% for blog in blogs %}
+
+
+
+<h2>{{ blog.blog_title }}</h2>
+<h6><i> {{ blog.publish_date|naturaltime }} </i></h6>
+
+<div class="row">
+    <div class="col-sm-4">
+        <img src="/media/{{ blog.blog_image}}" alt="{{ blog.blog_title}}" title="{{ blog.blog_title}}" width="250px" />
+    </div>
+
+    <div class="col-sm-8">
+        <p>
+            {{ blog.blog_content|range_filter|linebreaks }}
+            <a class="btn btn-primary btn-sm" href="{% url 'AppBlog:blog_Details' slug=blog.slug %}">Read More</a>
+        </p>
+        <h6>Posted By: <a href="">{{ blog.author}}</a></h6>
+        <h6>
+            {{ blog.like_blog.count }} Likes | {{ blog.blog_comment.count}} Comments
+        </h6>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 d-flex  w-100 ">
+            <a class="btn btn-sm btn-primary mr-5" href="{% url 'AppBlog:blog_Update' slug=blog.slug %}"
+                role="button">Edit</a>
+            <a class="btn btn-sm btn-danger ml-5" href="{% url 'AppBlog:blog_Delete' slug=blog.slug %}"
+                role="button">Delete</a>
+        </div>
+    </div>
+
+    {% endfor %} {% endblock %}
+</div>
